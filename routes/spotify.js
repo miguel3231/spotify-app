@@ -27,6 +27,7 @@ router.get('/', async (req, res) => {
     res.json(response.body);
 })
 
+//example how to save user to mongodb collection
 router.post('/user', (req,res) => {
     const user = new User({
         displayName: req.body.displayName,

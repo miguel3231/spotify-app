@@ -50,3 +50,8 @@ Reemplaza {nombre-de-artista} con el nombre de algún artista.
 Información del usuario acutal<br>
 GET http://localhost:3000/user<br>
 [No implementado]
+
+
+# Uso de Spotify API Wrapper
+
+Ya existe una libreria en npm llamado spotify-web-api-node para hacer llamadas al API de Spotify. Esta librería es incluida en la documentación de Spotify, así que es de confiar. Decidí utilizarla para agilizar mi desarrollo.
