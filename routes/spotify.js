@@ -12,34 +12,19 @@ router.get('/', async (req, res) => {
         clientId: process.env.SPOTIFY_CLIENT_ID,
         clientSecret: process.env.SPOTIFY_CLIENT_SECRET
     })
-    await spotifyApi.clientCredentialsGrant().then(
-        function(data) {
-          console.log('The access token expires in ' + data.body['expires_in']);
-          console.log('The access token is ' + data.body['access_token']);
-      
-          // Save the access token so that it's used in future calls
-          spotifyApi.setAccessToken(data.body['access_token']);
-          
-        //   spotifyApi.getAlbum('5U4W9E5WsYb2jUQWePT8Xm')
-        //     .then(function(data) {
-        //         res.json(data);
-        //     }, function(err) {
-        //         res.json({message: err})
-        //     });
-        },
-        function(err) {
-          console.log('Something went wrong when retrieving an access token', err);
-          res.json({message: err})
-        }
-      );
-      spotifyApi.getAlbum('5U4W9E5WsYb2jUQWePT8Xm')
-        .then(function(data) {
-            res.json(data);
-        }, function(err) {
-            res.json({message: err})
-        });
 
-    //res.send("I guess I'll do something here");
+    //Get access token
+    let clientCredentialsResponse = await spotifyApi.clientCredentialsGrant();
+    let accessToken = clientCredentialsResponse.body.access_token;
+    console.log("Access token is: " + accessToken);
+    spotifyApi.setAccessToken(accessToken);
+    //Get response
+    let response = await spotifyApi.getAlbum('5U4W9E5WsYb2jUQWePT8Xm');
+    if(response.statusCode != 200)
+    {
+        res.json({message: 'Something went wrong.'})
+    }
+    res.json(response.body);
 })
 
 router.post('/user', (req,res) => {

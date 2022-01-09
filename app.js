@@ -4,14 +4,17 @@ const mongoose = require('mongoose');
 require('dotenv/config');
 const app = express();
 
+//Middleware
 app.use(bodyParser.json())
-//import routes
 const spotifyRoute = require('./routes/spotify')
+const artistRoute = require('./routes/artist');
+const userRoute = require('./routes/user')
 app.use('/spotify', spotifyRoute);
+app.use('/artist', artistRoute);
+app.use('/user', userRoute);
 
-//routes
 app.get('/', (req, res) => {
-    res.send("hello");
+    res.send("Hola, bienvenido a mi app.");
 });
 
 //Connection to mongodb
